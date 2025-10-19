@@ -104,7 +104,7 @@ app.on('window-all-closed', () => {
 // Remove duplicate declaration
 // let toolbarView, webView; // Remove win from this line
 let win, toolbarView, webView;
-const HOME = 'boonhome.html';
+const HOME = 'http://127.0.0.1:5500/boonhome.html';
 
 function createWindow() {
   win = new BrowserWindow({
