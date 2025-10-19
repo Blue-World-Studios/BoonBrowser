@@ -1,0 +1,40 @@
+{
+  "name": "boon",
+  "version": "2.0.3",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win nsis"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^7.10.2",
+    "electron": "^38.3.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.blueworld.boon",
+    "productName": "Boon",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "BlueWorldStudios",
+        "repo": "Boon",
+        "author": "BlueWorldStudios",
+        "description": "Blue World Studios Official Repository for Boon App Updates"
+      }
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "assets/Boonimage.png"
+    }
+  },
+  "dependencies": {
+    "electron-log": "^5.4.3",
+    "electron-updater": "^6.6.2"
+  }
+}

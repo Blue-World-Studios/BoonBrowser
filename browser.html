@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Boon Browser</title>
+<link rel="icon" href="assets/Boonimage.png" />
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="toolbar_stub" style="display:none"></div>
+  <div id="tabs_bar" style="display:flex;gap:6px;padding:8px;background:#0f1519;border-bottom:1px solid #222"></div>
+  <div id="container"><div id="view_placeholder" style="height:calc(100vh - 120px)"></div><footer id="status">Ready</footer></div>
+<script>
+  // This page is intentionally lightweight. The real toolbar is rendered in a WebContentsView (toolbar.html).
+  // Tabs behavior is controlled via the toolbar UI and main process messages.
+</script>
+</body>
+</html>

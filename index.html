@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Blue World Boon</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background-color: #0d1117;
+      color: white;
+      overflow: hidden;
+    }
+
+    /* 🟦 Tab bar */
+    #tab-bar {
+      display: flex;
+      align-items: center;
+      background-color: #111a25;
+      height: 42px;
+      padding: 0 10px;
+      border-bottom: 1px solid #1f2b3a;
+      user-select: none;
+    }
+
+    .tab {
+      background-color: #1a2738;
+      color: #b0c4de;
+      padding: 8px 14px;
+      border-radius: 8px 8px 0 0;
+      margin-right: 6px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      font-size: 14px;
+    }
+
+    .tab.active {
+      background-color: #2376e6;
+      color: white;
+    }
+
+    .tab:hover {
+      background-color: #2b3f57;
+      color: white;
+    }
+
+    #new-tab {
+      margin-left: auto;
+      background: #2376e6;
+      color: white;
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    webview {
+      position: absolute;
+      top: 42px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: calc(100% - 42px);
+      border: none;
+    }
+  </style>
+  <script>
+  const { ipcRenderer } = require('electron');
+
+  ipcRenderer.on('update-status', (_, message) => {
+    const existing = document.getElementById('update-popup');
+    if (!existing) {
+      const popup = document.createElement('div');
+      popup.id = 'update-popup';
+      popup.style.position = 'fixed';
+      popup.style.bottom = '10px';
+      popup.style.right = '10px';
+      popup.style.background = '#161b22';
+      popup.style.color = '#58a6ff';
+      popup.style.padding = '10px 15px';
+      popup.style.borderRadius = '8px';
+      popup.style.fontFamily = 'Segoe UI, sans-serif';
+      popup.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
+      document.body.appendChild(popup);
+    }
+    document.getElementById('update-popup').textContent = message;
+  });
+</script>
+</head>
+<body>
+  <div id="tab-bar">
+    <div class="tab active" data-url="https://google.com">New Tab</div>
+    <div id="new-tab">+</div>
+  </div>
+
+  <webview id="browser-view" src="https://google.com" allowpopups></webview>
+
+  <script>
+    const tabBar = document.getElementById('tab-bar');
+    const webview = document.getElementById('browser-view');
+    const newTabButton = document.getElementById('new-tab');
+
+    function activateTab(tab) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      webview.src = tab.dataset.url;
+    }
+
+    tabBar.addEventListener('click', (e) => {
+      if (e.target.classList.contains('tab')) {
+        activateTab(e.target);
+      }
+    });
+
+    newTabButton.addEventListener('click', () => {
+      const newTab = document.createElement('div');
+      newTab.classList.add('tab');
+      newTab.dataset.url = 'https://google.com';
+      newTab.textContent = 'New Tab';
+      tabBar.insertBefore(newTab, newTabButton);
+      activateTab(newTab);
+    });
+  </script>
+</body>
+</html>
+

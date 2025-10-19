@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Toolbar</title>
+<link rel="icon" href="assets/Boonimage.png" />
+<style>
+  :root{--bg:#0d1117;--panel:#161b22;--accent:#2383e2;--accent-2:#2a9df4;--muted:#8b949e}
+  body{margin:0;font-family:Inter,system-ui,Arial;background:linear-gradient(90deg,var(--panel),#0d1117);color:#c9d1d9;height:64px;display:flex;align-items:center;gap:8px;padding:8px}
+  #logo{width:36px;height:36px;border-radius:6px}
+  input{flex:1;padding:8px;border-radius:8px;border:1px solid #30363d;background:#0f1519;color:#c9d1d9}
+  button{background:#2383e2;border:none;color:white;padding:8px 12px;border-radius:8px;cursor:pointer}
+  button:hover{background:#2a9df4}
+  #tabs{position:absolute;left:120px;top:70px;display:flex;gap:6px;padding:8px;background:transparent}
+  .tab{background:#2383e2;color:white;padding:6px 10px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:8px}
+  .tab .close{background:transparent;border:none;color:white;cursor:pointer;margin-left:6px}
+</style>
+</head>
+<body>
+  <img id="logo" src="assets/Boonimage.png" alt="logo">
+  <button id="back">◀</button>
+  <button id="forward">▶</button>
+  <button id="reload">⟲</button>
+  <button id="home">🏠</button>
+  <input id="url" placeholder="Enter URL or search (press Enter)">
+  <button id="go">Go</button>
+  <button id="newtab">＋ Tab</button>
+  <button id="bookmark">★</button>
+  <button id="menu">☰</button>
+
+  <div id="aboutModal" style="display:none;position:fixed;right:12px;top:72px;background:#0f1519;border:1px solid #253138;padding:12px;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.6)">
+    <div style="font-weight:700">Boon Browser v2.0</div>
+    <div>Created by Blue World</div>
+    <div>© 2025 Blue World</div>
+    <div>Made with 💙 and Electron</div>
+    <div style="text-align:right;margin-top:8px"><button id="closeAbout">Close</button></div>
+  </div>
+
+<script>
+  const back = document.getElementById('back');
+  const forward = document.getElementById('forward');
+  const reload = document.getElementById('reload');
+  const home = document.getElementById('home');
+  const go = document.getElementById('go');
+  const urlInput = document.getElementById('url');
+  const newtab = document.getElementById('newtab');
+  const menu = document.getElementById('menu');
+  const about = document.getElementById('aboutModal');
+  const closeAbout = document.getElementById('closeAbout');
+
+  back.addEventListener('click', ()=> window.toolbarAPI.back());
+  forward.addEventListener('click', ()=> window.toolbarAPI.forward());
+  reload.addEventListener('click', ()=> window.toolbarAPI.reload());
+  home.addEventListener('click', ()=> window.toolbarAPI.home());
+  go.addEventListener('click', ()=> {
+    let url = urlInput.value.trim();
+    if(!/^https?:\/\//i.test(url)){ if(/^localhost(:\\d+)?$/i.test(url)||/\./.test(url)) url='http://'+url; else url='https://www.google.com/search?q='+encodeURIComponent(url); }
+    window.toolbarAPI.navigate(url);
+  });
+  urlInput.addEventListener('keydown',(e)=>{ if(e.key==='Enter') go.click(); });
+
+  newtab.addEventListener('click', ()=> {
+    // open a new blank tab by asking main to load homepage
+    window.toolbarAPI.navigate('https://www.google.com');
+  });
+
+  menu.addEventListener('click', ()=> { about.style.display = about.style.display==='none'?'block':'none'; });
+  closeAbout.addEventListener('click', ()=> about.style.display='none');
+
+  window.toolbarAPI.onNavigated((url)=> { urlInput.value = url; });
+  window.toolbarAPI.onTitleUpdated((title)=> { document.title = title; });
+</script>
+</body>
+</html>
