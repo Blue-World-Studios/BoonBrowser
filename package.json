@@ -1,27 +1,26 @@
 {
-  "name": "boon",
-  "version": "2.0.6",
-  "description": "A modern, dark-blue, resizable, fun web browser by Blue World Studio.",
+  "name": "boon-browser",
+  "version": "2.0.0",
+  "description": "A modern, dark-blue browser made by Blue World.",
+  "author": "Blue World",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder"
+    "build": "electron-builder --win"
+  },
+  "devDependencies": {
+    "electron": "latest",
+    "electron-builder": "latest",
+    "electron-updater": "latest"
   },
   "build": {
-    "appId": "com.blueworld.boon",
-    "productName": "Boon",
-    "copyright": "© 2025 Blue World Studio",
+    "appId": "com.blueworld.boonbrowser",
+    "productName": "Boon Browser",
     "directories": {
-      "buildResources": "build"
+      "output": "dist"
     },
     "files": [
-      "index.html",
-      "main.js",
-      "preload.js",
-      "assets/**/*"
-    ],
-    "extraResources": [
-      "Boonimage.png"
+      "**/*"
     ],
     "win": {
       "target": "nsis",
@@ -29,18 +28,10 @@
     },
     "publish": [
       {
-        "provider": "github",
-        "owner": "Blue-World-Studios",
-        "repo": "BoonBrowser",
-        "author": "Blue World Studio"
+        "provider": "generic",
+        "url": "https://github.com/Blue-World-Studios/BoonBrowser/releases/latest/download/"
       }
     ]
-  },
-  "dependencies": {
-    "electron-updater": "^6.1.8"
-  },
-  "devDependencies": {
-    "electron": "^25.3.1",
-    "electron-builder": "^25.1.1"
   }
 }
+
