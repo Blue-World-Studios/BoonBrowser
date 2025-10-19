@@ -95,6 +95,7 @@ app.whenReady().then(() => {
     }, 3000);
   });
 });
+autoUpdater.setFeedURL({ provider: "github", owner: "Blue-World-Studios", repo: "BoonBrowser" });
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
