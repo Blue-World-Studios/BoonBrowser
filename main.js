@@ -2,7 +2,7 @@ const { app, BrowserWindow, WebContentsView, ipcMain } = require('electron');
 const path = require('path');
 const log = require('electron-log');
 const { autoUpdater } = require('electron-updater');
-
+const { setupAutoUpdater } = require("./update.js");
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
 log.info('Boon Browser starting update check...');
@@ -52,6 +52,8 @@ function createWindow() {
 
 app.whenReady().then(() => {
   createWindow();
+  setupAutoUpdater(); // 🔹 start the update checker
+});
 
   // 💬 Enable auto-updater logging
   autoUpdater.logger = log;
